@@ -1,6 +1,7 @@
 import { mockItGenerator } from 'generate-it-mockers'
 {% if pathMethodsHaveAttr(operations, 'x-passResponse') %}import { Response } from 'express';{% endif %}
-{% if pathMethodsHaveAttr(operations, 'security', ['jwtToken', 'JwtToken']) %}import {JwtAccess} from '@/http/nodegen/interfaces/JwtAccess';{% endif %}
+{% set jwtSecurityNames = [nodegenRc.helpers.jwtSecurityName] if nodegenRc.helpers.jwtSecurityNam else ['jwtToken', 'JwtToken'] %}
+{% if pathMethodsHaveAttr(operations, 'security', jwtSecurityNames) %}import { {{ nodegenRc.helpers.stub.jwtType }} } from '@/http/nodegen/interfaces';{% endif %}
 {% set interfaces = importInterfaces(operations) %}
 {% for interface in interfaces -%}
 import { {{ interface }} } from '@/http/nodegen/interfaces/{{ interface }}';
